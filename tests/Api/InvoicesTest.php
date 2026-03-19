@@ -7,11 +7,13 @@ namespace Required\Harvest\Tests\Api;
 
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use Required\Harvest\Api\Invoices;
 
 /**
  * Tests for invoices endpoint.
  */
+#[AllowMockObjectsWithoutExpectations]
 class InvoicesTest extends TestCase {
 
 	/**
@@ -34,7 +36,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/invoices' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all() );
 	}
@@ -49,7 +51,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/invoices' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->expectException( \Required\Harvest\Exception\RuntimeException::class );
 		$api->all();
@@ -68,7 +70,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/invoices', [ 'updated_since' => $updatedSince->format( DateTime::ATOM ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -86,7 +88,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/invoices', [ 'updated_since' => $updatedSince ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -104,7 +106,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/invoices', [ 'from' => $updatedSince->format( 'Y-m-d' ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'from' => $updatedSince ] ) );
 	}
@@ -122,7 +124,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/invoices', [ 'to' => $updatedSince->format( 'Y-m-d' ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'to' => $updatedSince ] ) );
 	}
@@ -150,7 +152,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/invoices', [ 'state' => 'draft' ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'state' => 'draft' ] ) );
 	}
@@ -167,7 +169,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/invoices/' . $invoiceId )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->show( $invoiceId ) );
 	}
@@ -246,7 +248,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/invoices', $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->create( $data ) );
 	}
@@ -266,7 +268,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'patch' )
 			->with( '/invoices/' . $invoiceId, $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->update( $invoiceId, $data ) );
 	}
@@ -296,7 +298,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/invoices/' . $invoiceId . '/messages', [ 'event_type' => 'send' ] )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->send( $invoiceId ) );
 	}
@@ -312,7 +314,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/invoices/' . $invoiceId . '/messages', [ 'event_type' => 'close' ] )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->close( $invoiceId ) );
 	}
@@ -328,7 +330,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/invoices/' . $invoiceId . '/messages', [ 'event_type' => 're-open' ] )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->reopen( $invoiceId ) );
 	}
@@ -344,7 +346,7 @@ class InvoicesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/invoices/' . $invoiceId . '/messages', [ 'event_type' => 'draft' ] )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->draft( $invoiceId ) );
 	}

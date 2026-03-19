@@ -8,6 +8,7 @@ namespace Required\Harvest\Tests\HttpClient\Plugin;
 use GuzzleHttp\Psr7\Response;
 use Http\Client\Promise\HttpFulfilledPromise;
 use Http\Promise\Promise;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -22,12 +23,11 @@ class ResponseExceptionThrowerTest extends TestCase {
 	/**
 	 * @param \Psr\Http\Message\ResponseInterface                            $response
 	 * @param \Required\Harvest\Exception\ExceptionInterface|\Exception|null $exception
-	 *
-	 * @dataProvider responseProvider
 	 */
+	#[DataProvider('responseProvider')]
 	public function testDoHandleRequest( ResponseInterface $response, ?ExceptionInterface $exception = null ) {
 		/** @var \Psr\Http\Message\RequestInterface $request */
-		$request = $this->getMockForAbstractClass( RequestInterface::class );
+		$request = $this->createStub( RequestInterface::class );
 		$plugin  = new ResponseExceptionThrower();
 		$verify  = function ( RequestInterface $request ) use ( $response ) {
 			return new HttpFulfilledPromise( $response );

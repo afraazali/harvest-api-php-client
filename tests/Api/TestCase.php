@@ -27,17 +27,12 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 	 * @return \MockObject
 	 */
 	protected function getApiMock(): MockObject {
-		$httpClient = $this->getMockBuilder( HttpClient::class )
-			->setMethods( [ 'sendRequest' ] )
-			->getMock();
-
-		$httpClient->expects( $this->any() )
-			->method( 'sendRequest' );
+		$httpClient = $this->createStub( HttpClient::class );
 
 		$client = Client::createWithHttpClient( $httpClient );
 
 		return $this->getMockBuilder( $this->getApiClass() )
-			->setMethods( [ 'get', 'post', 'patch', 'delete', 'put', 'head' ] )
+			->onlyMethods( [ 'get', 'post', 'patch', 'delete', 'put', 'head' ] )
 			->setConstructorArgs( [ $client ] )
 			->getMock();
 	}

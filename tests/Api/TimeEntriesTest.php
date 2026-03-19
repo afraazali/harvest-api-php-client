@@ -7,12 +7,14 @@ namespace Required\Harvest\Tests\Api;
 
 use DateTime;
 use DateTimeZone;
-use Required\Harvest\Api\TimeEntries;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use Required\Harvest\Api\TimeEntry\ExternalReference;
+use Required\Harvest\Api\TimeEntries;
 
 /**
  * Tests for time entries endpoint.
  */
+#[AllowMockObjectsWithoutExpectations]
 class TimeEntriesTest extends TestCase {
 
 	/**
@@ -35,7 +37,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/time_entries' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all() );
 	}
@@ -50,7 +52,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/time_entries' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->expectException( \Required\Harvest\Exception\RuntimeException::class );
 		$api->all();
@@ -69,7 +71,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/time_entries', [ 'updated_since' => $updatedSince->format( DateTime::ATOM ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -87,7 +89,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/time_entries', [ 'updated_since' => $updatedSince ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -105,7 +107,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/time_entries', [ 'from' => $updatedSince->format( 'Y-m-d' ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'from' => $updatedSince ] ) );
 	}
@@ -123,7 +125,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/time_entries', [ 'to' => $updatedSince->format( 'Y-m-d' ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'to' => $updatedSince ] ) );
 	}
@@ -139,7 +141,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/time_entries', [ 'is_billed' => 'true' ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'is_billed' => true ] ) );
 	}
@@ -155,7 +157,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/time_entries', [ 'is_running' => 'false' ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'is_running' => false ] ) );
 	}
@@ -172,7 +174,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/time_entries/' . $timeEntryId )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->show( $timeEntryId ) );
 	}
@@ -317,7 +319,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/time_entries', $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->create( $data ) );
 	}
@@ -348,7 +350,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/time_entries', $data_response )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->create( $data_input ) );
 	}
@@ -368,7 +370,7 @@ class TimeEntriesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'patch' )
 			->with( '/time_entries/' . $timeEntryId, $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->update( $timeEntryId, $data ) );
 	}

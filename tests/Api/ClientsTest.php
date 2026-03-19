@@ -7,12 +7,14 @@ namespace Required\Harvest\Tests\Api;
 
 use DateTime;
 use DateTimeZone;
-use Required\Harvest\Api\Clients;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use Required\Harvest\Util\Currencies;
+use Required\Harvest\Api\Clients;
 
 /**
  * Tests for clients endpoint.
  */
+#[AllowMockObjectsWithoutExpectations]
 class ClientsTest extends TestCase {
 
 	/**
@@ -35,7 +37,7 @@ class ClientsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/clients' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all() );
 	}
@@ -50,7 +52,7 @@ class ClientsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/clients' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->expectException( \Required\Harvest\Exception\RuntimeException::class );
 		$api->all();
@@ -67,7 +69,7 @@ class ClientsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/clients', [ 'is_active' => 'true' ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'is_active' => true ] ) );
 	}
@@ -83,7 +85,7 @@ class ClientsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/clients', [ 'is_active' => 'true' ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'is_active' => 1 ] ) );
 	}
@@ -99,7 +101,7 @@ class ClientsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/clients', [ 'is_active' => 'true' ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'is_active' => 'true' ] ) );
 	}
@@ -117,7 +119,7 @@ class ClientsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/clients', [ 'updated_since' => $updatedSince->format( DateTime::ATOM ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -135,7 +137,7 @@ class ClientsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/clients', [ 'updated_since' => $updatedSince ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -152,7 +154,7 @@ class ClientsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/clients/' . $clientId )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->show( $clientId ) );
 	}
@@ -207,7 +209,7 @@ class ClientsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/clients', $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->create( $data ) );
 	}
@@ -227,7 +229,7 @@ class ClientsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'patch' )
 			->with( '/clients/' . $clientId, $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->update( $clientId, $data ) );
 	}

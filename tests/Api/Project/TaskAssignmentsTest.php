@@ -42,7 +42,7 @@ class TaskAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( "/projects/{$this->projectId}/task_assignments" )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( $this->projectId ) );
 	}
@@ -57,7 +57,7 @@ class TaskAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( "/projects/{$this->projectId}/task_assignments" )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->expectException( \Required\Harvest\Exception\RuntimeException::class );
 		$api->all( $this->projectId );
@@ -76,7 +76,7 @@ class TaskAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( "/projects/{$this->projectId}/task_assignments", [ 'updated_since' => $updatedSince->format( DateTime::ATOM ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( $this->projectId, [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -94,7 +94,7 @@ class TaskAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( "/projects/{$this->projectId}/task_assignments", [ 'updated_since' => $updatedSince ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( $this->projectId, [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -110,7 +110,7 @@ class TaskAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( "/projects/{$this->projectId}/task_assignments", [ 'is_active' => 'true' ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( $this->projectId, [ 'is_active' => true ] ) );
 	}
@@ -127,7 +127,7 @@ class TaskAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( "/projects/{$this->projectId}/task_assignments/{$taskAssignmentId}" )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->show( $this->projectId, $taskAssignmentId ) );
 	}
@@ -189,7 +189,7 @@ class TaskAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( "/projects/{$this->projectId}/task_assignments", $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->create( $this->projectId, $data ) );
 	}
@@ -209,7 +209,7 @@ class TaskAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'patch' )
 			->with( "/projects/{$this->projectId}/task_assignments/{$taskAssignmentId}", $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->update( $this->projectId, $taskAssignmentId, $data ) );
 	}

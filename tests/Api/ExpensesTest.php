@@ -34,7 +34,7 @@ class ExpensesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/expenses' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all() );
 	}
@@ -49,7 +49,7 @@ class ExpensesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/expenses' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->expectException( \Required\Harvest\Exception\RuntimeException::class );
 
@@ -69,7 +69,7 @@ class ExpensesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/expenses', [ 'updated_since' => $updatedSince->format( DateTime::ATOM ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -87,7 +87,7 @@ class ExpensesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/expenses', [ 'updated_since' => $updatedSince ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -105,7 +105,7 @@ class ExpensesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/expenses', [ 'from' => $updatedSince->format( 'Y-m-d' ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'from' => $updatedSince ] ) );
 	}
@@ -123,7 +123,7 @@ class ExpensesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/expenses', [ 'to' => $updatedSince->format( 'Y-m-d' ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'to' => $updatedSince ] ) );
 	}
@@ -140,7 +140,7 @@ class ExpensesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/expenses/' . $expenseId )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->show( $expenseId ) );
 	}
@@ -286,7 +286,7 @@ class ExpensesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/expenses', $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->create( $data ) );
 	}
@@ -317,7 +317,7 @@ class ExpensesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/expenses', $data_response )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->create( $data_input ) );
 	}
@@ -337,7 +337,7 @@ class ExpensesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'patch' )
 			->with( '/expenses/' . $expenseId, $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->update( $expenseId, $data ) );
 	}

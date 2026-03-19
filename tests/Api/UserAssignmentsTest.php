@@ -34,7 +34,7 @@ class UserAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/user_assignments' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all() );
 	}
@@ -49,7 +49,7 @@ class UserAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/user_assignments' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->expectException( \Required\Harvest\Exception\RuntimeException::class );
 		$api->all();
@@ -68,7 +68,7 @@ class UserAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/user_assignments', [ 'updated_since' => $updatedSince->format( DateTime::ATOM ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -86,7 +86,7 @@ class UserAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/user_assignments', [ 'updated_since' => $updatedSince ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -102,7 +102,7 @@ class UserAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/user_assignments', [ 'is_active' => 'true' ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'is_active' => true ] ) );
 	}
@@ -118,7 +118,7 @@ class UserAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/user_assignments', [ 'is_active' => 'true' ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'is_active' => 1 ] ) );
 	}
@@ -134,7 +134,7 @@ class UserAssignmentsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/user_assignments', [ 'is_active' => 'true' ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'is_active' => 'true' ] ) );
 	}

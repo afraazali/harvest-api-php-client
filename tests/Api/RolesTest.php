@@ -32,7 +32,7 @@ class RolesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/roles' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all() );
 	}
@@ -47,7 +47,7 @@ class RolesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/roles' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->expectException( \Required\Harvest\Exception\RuntimeException::class );
 		$api->all();
@@ -65,7 +65,7 @@ class RolesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/roles/' . $roleId )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->show( $roleId ) );
 	}
@@ -120,7 +120,7 @@ class RolesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/roles', $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->create( $data ) );
 	}
@@ -141,7 +141,7 @@ class RolesTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'patch' )
 			->with( '/roles/' . $roleId, $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->update( $roleId, $data ) );
 	}

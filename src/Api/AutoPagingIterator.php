@@ -56,14 +56,14 @@ class AutoPagingIterator implements Iterator {
 	 *
 	 * @return array Data of the current element.
 	 */
-	public function current() {
+	public function current(): mixed {
 		return current( $this->data );
 	}
 
 	/**
 	 * Moves forward to next element.
 	 */
-	public function next() {
+	public function next(): void {
 		$item = next( $this->data );
 
 		if ( false === $item && $this->apiInterface->hasMore() ) {
@@ -78,7 +78,7 @@ class AutoPagingIterator implements Iterator {
 	 *
 	 * @return mixed Scalar on success, or null on failure.
 	 */
-	public function key() {
+	public function key(): mixed {
 		return key( $this->data ) + $this->keyOffset;
 	}
 
@@ -87,7 +87,7 @@ class AutoPagingIterator implements Iterator {
 	 *
 	 * @return bool  Returns true on success or false on failure.
 	 */
-	public function valid() {
+	public function valid(): bool {
 		$key = key( $this->data );
 
 		return null !== $key && false !== $key;
@@ -96,7 +96,7 @@ class AutoPagingIterator implements Iterator {
 	/**
 	 * Rewind the Iterator to the first element.
 	 */
-	public function rewind() {
+	public function rewind(): void {
 		$this->apiInterface->resetPagination();
 		$this->data = $this->apiInterface->all( $this->parameters );
 	}

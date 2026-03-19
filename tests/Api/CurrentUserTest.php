@@ -5,12 +5,14 @@
 
 namespace Required\Harvest\Tests\Api;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use Required\Harvest\Api\CurrentUser;
 use Required\Harvest\Api\CurrentUser\ProjectAssignments;
 
 /**
  * Tests for current user endpoint.
  */
+#[AllowMockObjectsWithoutExpectations]
 class CurrentUserTest extends TestCase {
 
 	/**
@@ -32,7 +34,7 @@ class CurrentUserTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/users/me' )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->show() );
 	}

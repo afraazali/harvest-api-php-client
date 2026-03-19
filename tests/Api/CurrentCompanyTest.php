@@ -31,7 +31,7 @@ class CurrentCompanyTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/company' )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->show() );
 	}

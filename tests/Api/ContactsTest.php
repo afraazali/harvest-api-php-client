@@ -34,7 +34,7 @@ class ContactsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/contacts' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all() );
 	}
@@ -49,7 +49,7 @@ class ContactsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/contacts' )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->expectException( \Required\Harvest\Exception\RuntimeException::class );
 		$api->all();
@@ -68,7 +68,7 @@ class ContactsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/contacts', [ 'updated_since' => $updatedSince->format( DateTime::ATOM ) ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -86,7 +86,7 @@ class ContactsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/contacts', [ 'updated_since' => $updatedSince ] )
-			->will( $this->returnValue( $response ) );
+			->willReturn( $response );
 
 		$this->assertEquals( $expectedArray, $api->all( [ 'updated_since' => $updatedSince ] ) );
 	}
@@ -103,7 +103,7 @@ class ContactsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'get' )
 			->with( '/contacts/' . $contactId )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->show( $contactId ) );
 	}
@@ -203,7 +203,7 @@ class ContactsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'post' )
 			->with( '/contacts', $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->create( $data ) );
 	}
@@ -223,7 +223,7 @@ class ContactsTest extends TestCase {
 		$api->expects( $this->once() )
 			->method( 'patch' )
 			->with( '/contacts/' . $contactId, $data )
-			->will( $this->returnValue( $expectedArray ) );
+			->willReturn( $expectedArray );
 
 		$this->assertEquals( $expectedArray, $api->update( $contactId, $data ) );
 	}

@@ -8,6 +8,7 @@ namespace Required\Harvest\Tests\Api;
 use GuzzleHttp\Psr7\Response;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Client\Common\HttpMethodsClientInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionMethod;
@@ -18,6 +19,7 @@ use function GuzzleHttp\Psr7\stream_for;
 /**
  * Tests for company endpoint.
  */
+#[AllowMockObjectsWithoutExpectations]
 class AbstractApiTest extends TestCase {
 
 	/**
@@ -31,14 +33,11 @@ class AbstractApiTest extends TestCase {
 		$httpClient->expects( $this->any() )
 			->method( 'get' )
 			->with( '/path?param=param-value', [ 'header' => 'header-value' ] )
-			->will( $this->returnValue( $this->getPsr7Response( $expectedBody ) ) );
+			->willReturn( $this->getPsr7Response( $expectedBody ) );
 
-		$client = $this->getMockBuilder( Client::class )
-			->setMethods( [ 'getHttpClient' ] )
-			->getMock();
+		$client = $this->createStub( Client::class );
 
-		$client->expects( $this->any() )
-			->method( 'getHttpClient' )
+		$client->method( 'getHttpClient' )
 			->willReturn( $httpClient );
 
 		$api = $this->getAbstractApiObject( $client );
@@ -73,14 +72,11 @@ class AbstractApiTest extends TestCase {
 		$httpClient->expects( $this->any() )
 			->method( 'get' )
 			->with( "/path?page={$expectedPage}&per_page={$expectedPerPage}" )
-			->will( $this->returnValue( $this->getPsr7Response( $expectedBody ) ) );
+			->willReturn( $this->getPsr7Response( $expectedBody ) );
 
-		$client = $this->getMockBuilder( Client::class )
-			->setMethods( [ 'getHttpClient' ] )
-			->getMock();
+		$client = $this->createStub( Client::class );
 
-		$client->expects( $this->any() )
-			->method( 'getHttpClient' )
+		$client->method( 'getHttpClient' )
 			->willReturn( $httpClient );
 
 		$api = $this->getAbstractApiObject( $client );
@@ -113,14 +109,11 @@ class AbstractApiTest extends TestCase {
 		$httpClient->expects( $this->any() )
 			->method( 'head' )
 			->with( '/path?param=param-value', [ 'header' => 'header-value' ] )
-			->will( $this->returnValue( $this->getPsr7Response( $expectedBody ) ) );
+			->willReturn( $this->getPsr7Response( $expectedBody ) );
 
-		$client = $this->getMockBuilder( Client::class )
-			->setMethods( [ 'getHttpClient' ] )
-			->getMock();
+		$client = $this->createStub( Client::class );
 
-		$client->expects( $this->any() )
-			->method( 'getHttpClient' )
+		$client->method( 'getHttpClient' )
 			->willReturn( $httpClient );
 
 		$api = $this->getAbstractApiObject( $client );
@@ -160,14 +153,11 @@ class AbstractApiTest extends TestCase {
 				],
 				json_encode( [ 'param' => 'param-value' ] )
 			)
-			->will( $this->returnValue( $this->getPsr7Response( $expectedBody ) ) );
+			->willReturn( $this->getPsr7Response( $expectedBody ) );
 
-		$client = $this->getMockBuilder( Client::class )
-			->setMethods( [ 'getHttpClient' ] )
-			->getMock();
+		$client = $this->createStub( Client::class );
 
-		$client->expects( $this->any() )
-			->method( 'getHttpClient' )
+		$client->method( 'getHttpClient' )
 			->willReturn( $httpClient );
 
 		$api = $this->getAbstractApiObject( $client );
@@ -207,14 +197,11 @@ class AbstractApiTest extends TestCase {
 				],
 				json_encode( [ 'param' => 'param-value' ] )
 			)
-			->will( $this->returnValue( $this->getPsr7Response( $expectedBody ) ) );
+			->willReturn( $this->getPsr7Response( $expectedBody ) );
 
-		$client = $this->getMockBuilder( Client::class )
-			->setMethods( [ 'getHttpClient' ] )
-			->getMock();
+		$client = $this->createStub( Client::class );
 
-		$client->expects( $this->any() )
-			->method( 'getHttpClient' )
+		$client->method( 'getHttpClient' )
 			->willReturn( $httpClient );
 
 		$api = $this->getAbstractApiObject( $client );
@@ -254,14 +241,11 @@ class AbstractApiTest extends TestCase {
 				],
 				json_encode( [ 'param' => 'param-value' ] )
 			)
-			->will( $this->returnValue( $this->getPsr7Response( $expectedBody ) ) );
+			->willReturn( $this->getPsr7Response( $expectedBody ) );
 
-		$client = $this->getMockBuilder( Client::class )
-			->setMethods( [ 'getHttpClient' ] )
-			->getMock();
+		$client = $this->createStub( Client::class );
 
-		$client->expects( $this->any() )
-			->method( 'getHttpClient' )
+		$client->method( 'getHttpClient' )
 			->willReturn( $httpClient );
 
 		$api = $this->getAbstractApiObject( $client );
@@ -301,14 +285,11 @@ class AbstractApiTest extends TestCase {
 				],
 				json_encode( [ 'param' => 'param-value' ] )
 			)
-			->will( $this->returnValue( $this->getPsr7Response( $expectedBody ) ) );
+			->willReturn( $this->getPsr7Response( $expectedBody ) );
 
-		$client = $this->getMockBuilder( Client::class )
-			->setMethods( [ 'getHttpClient' ] )
-			->getMock();
+		$client = $this->createStub( Client::class );
 
-		$client->expects( $this->any() )
-			->method( 'getHttpClient' )
+		$client->method( 'getHttpClient' )
 			->willReturn( $httpClient );
 
 		$api = $this->getAbstractApiObject( $client );
@@ -337,10 +318,7 @@ class AbstractApiTest extends TestCase {
 	 * @return \PHPUnit\Framework\MockObject\MockObject
 	 */
 	protected function getAbstractApiObject( $client ) {
-		return $this->getMockBuilder( AbstractApi::class )
-			->setMethods( null )
-			->setConstructorArgs( [ $client ] )
-			->getMock();
+		return new class( $client ) extends AbstractApi {};
 	}
 
 	/**
@@ -350,21 +328,7 @@ class AbstractApiTest extends TestCase {
 	 * @return \PHPUnit\Framework\MockObject\MockObject
 	 */
 	protected function getHttpMethodsMock( array $methods = [] ) {
-		if ( interface_exists( HttpMethodsClientInterface::class ) ) {
-			$mock = $this->createMock( HttpMethodsClientInterface::class );
-		} else {
-			$methods = array_merge( [ 'sendRequest' ], $methods );
-			$mock    = $this->getMockBuilder( HttpMethodsClient::class )
-				->disableOriginalConstructor()
-				->setMethods( $methods )
-				->getMock();
-		}
-
-		$mock
-			->expects( $this->any() )
-			->method( 'sendRequest' );
-
-		return $mock;
+		return $this->createMock( HttpMethodsClientInterface::class );
 	}
 
 	/**

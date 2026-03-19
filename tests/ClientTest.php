@@ -6,6 +6,8 @@
 namespace Required\Harvest\Tests;
 
 use Http\Client\HttpClient;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Required\Harvest\Api;
 use Required\Harvest\Client;
@@ -15,6 +17,7 @@ use Required\Harvest\HttpClient\Plugin\HarvestAuthentication;
 /**
  * Tests the Client class.
  */
+#[AllowMockObjectsWithoutExpectations]
 class ClientTest extends TestCase {
 
 	/**
@@ -42,7 +45,7 @@ class ClientTest extends TestCase {
 		$accessToken = 'token';
 
 		$builder = $this->getMockBuilder( Builder::class )
-			->setMethods( [ 'addPlugin', 'removePlugin' ] )
+			->onlyMethods( [ 'addPlugin', 'removePlugin' ] )
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -56,7 +59,7 @@ class ClientTest extends TestCase {
 
 		$client = $this->getMockBuilder( Client::class )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getHttpClientBuilder' ] )
+			->onlyMethods( [ 'getHttpClientBuilder' ] )
 			->getMock();
 
 		$client->expects( $this->any() )
@@ -71,9 +74,8 @@ class ClientTest extends TestCase {
 	 *
 	 * @param string $name Endpoint name.
 	 * @param string $class Class name.
-	 *
-	 * @dataProvider getApiClassesProvider
 	 */
+	#[DataProvider('getApiClassesProvider')]
 	public function testReturnOfGetApiInstance( $name, $class ) {
 		$client = new Client();
 		$this->assertInstanceOf( $class, $client->api( $name ) );
@@ -84,9 +86,8 @@ class ClientTest extends TestCase {
 	 *
 	 * @param string $name Endpoint name.
 	 * @param string $class Class name.
-	 *
-	 * @dataProvider getApiClassesProvider
 	 */
+	#[DataProvider('getApiClassesProvider')]
 	public function testReturnOfGetMagicApiInstance( $name, $class ) {
 		$client = new Client();
 		$this->assertInstanceOf( $class, $client->$name() );
@@ -115,7 +116,7 @@ class ClientTest extends TestCase {
 	 *
 	 * @return array
 	 */
-	public function getApiClassesProvider(): array {
+	public static function getApiClassesProvider(): array {
 		return [
 			[ 'clients', Api\Clients::class ],
 			[ 'contacts', Api\Contacts::class ],
